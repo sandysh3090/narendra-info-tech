@@ -1,0 +1,137 @@
+
+#import "firstViewofTakingImage.h"
+#import "OverlayView.h"
+#import "FirstImageAfterCatureViewController.h"
+#import "ViewController.h"
+#import "UIView+Hierarchy.h"
+#define IsRunningTallPhone() ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568)
+@interface firstViewofTakingImage ()
+
+@end
+
+@implementation firstViewofTakingImage
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title=@"First Image";
+    self.navigationItem.hidesBackButton=YES;
+    self.view.backgroundColor=[UIColor colorWithRed:0.0 green:0.43 blue:0.82 alpha:1.0];
+    UIImageView *imgView=[[UIImageView alloc]init];
+    if (IsRunningTallPhone())
+    {
+        imgView.frame=CGRectMake(0, 0, 320, 504);
+        [imgView setImage:[UIImage imageNamed:@"inner_bg568h@2x.png" ]];
+      
+    }
+    else
+    {
+        imgView.frame=CGRectMake(0, 0, 320, 416);
+        [imgView setImage:[UIImage imageNamed:@"inner_bg.png" ]];
+    }
+    [self.view addSubview:imgView];
+    [imgView sendToBack];
+    descriptionView=[[UITextView alloc]initWithFrame:CGRectMake(10, 10, 300, 180)];
+    [descriptionView setBackgroundColor:[UIColor colorWithRed:0.2 green:0.37 blue:0.71 alpha:1.0]];
+    descriptionView.font=[UIFont fontWithName:@"Helvetica" size:15];
+    descriptionView.text=@"“Before you start work take a picture of where you are working this will indicate what existing pipework looked like before you started altering any pipes”                               “After you have completed your work take a picture of the completed job”                                  “Then fill out your Form4 and take a picture of the completed Form4”";
+    [self.view addSubview:descriptionView];
+    
+    takefirstImageBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    [takefirstImageBtn setTitle:@"Take First Picture" forState:UIControlStateNormal];
+    [takefirstImageBtn setFrame:CGRectMake(60, 200, 200, 40)];
+    [takefirstImageBtn addTarget:self action:@selector(takeFirstPicture) forControlEvents:UIControlEventTouchUpInside];
+    [takefirstImageBtn setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:takefirstImageBtn];
+    
+    exitBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    [exitBtn setTitle:@"Exit" forState:UIControlStateNormal];
+    [exitBtn setFrame:CGRectMake(60, 250, 200, 40)];
+    [exitBtn addTarget:self action:@selector(exitBtnIsTap) forControlEvents:UIControlEventTouchUpInside];
+    [exitBtn setBackgroundColor:[UIColor greenColor]];
+    [self.view addSubview:exitBtn];
+   
+    
+    // Do any additional setup after loading the view from its nib.
+}
+-(void)exitBtnIsTap
+{
+    ViewController *viewobj=[[ViewController alloc]initWithNibName:@"ViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:viewobj animated:YES];
+}
+-(void)takeFirstPicture
+{
+   /*
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        // Displays a control that allows the user to choose picture or
+        
+        // movie capture, if both are available:
+        imagePicker.mediaTypes =[UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        
+        // Hides the controls for moving & scaling pictures, or for
+        // trimming movies. To instead show the controls, use YES.
+        imagePicker.allowsEditing = NO;
+        
+        //cameraUI.mediaTypes = [[NSArray alloc] initWithObjects: (NSString *) kUTTypeMovie, nil];
+        
+        // Hide the controls:
+        imagePicker.showsCameraControls = YES;
+        imagePicker.navigationBarHidden = YES;
+        
+        // Make camera view full screen:
+        imagePicker.wantsFullScreenLayout = YES;
+        // imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
+        
+        // Insert the overlay:
+        overlay.mainPicker = imagePicker;
+        [imagePicker.cameraOverlayView addSubview:overlay];
+        //cameraUI.cameraOverlayView = overlay;
+        imagePicker.delegate = self;
+        [self presentModalViewController: imagePicker animated:NO];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Your device doesn't have camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+*/
+    FirstImageAfterCatureViewController *ViewObj=[[FirstImageAfterCatureViewController alloc]initWithNibName:@"FirstImageAfterCatureViewController" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:ViewObj animated:YES];
+}
+
+#pragma mark - UIImagePickerController Delegate methods
+- (void) imagePickerControllerDidCancel: (UIImagePickerController *) picker
+{
+       [picker dismissModalViewControllerAnimated:YES];
+        
+}
+
+// For responding to the user accepting a newly-captured picture or movie
+
+- (void) imagePickerController: (UIImagePickerController *) picker didFinishPickingMediaWithInfo: (NSDictionary *) info
+{
+    
+        //imageToSave = (UIImage *) [info objectForKey:UIImagePickerControllerOriginalImage];
+        //----- here implement setting tab action SaveToAlbum YES/NO --------
+           // Handle a movie capture
+    
+   }
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
